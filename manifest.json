@@ -1,0 +1,13 @@
+{
+	"name":"Stack Overflow Search",
+	"version":"1.0",
+	"description":"Playing with google chrome extensions",
+	"browser_action":
+	{
+		"default_icon": "accept.png",
+		"popup":"index.html"
+	},
+	"background_page":"background.html",
+	"permissions":["http://api.stackoverflow.com/"]
+
+}

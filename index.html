@@ -1,0 +1,57 @@
+<html>
+<head>
+	<style>
+		 html{
+			font-family:"Arial";
+		 }
+		 body{
+			width:800px;
+			height:150px;
+		 }
+		
+	</style>
+	<script>
+	function addcontent(res){
+		var jsonObj = JSON.parse(res);
+		//console.log(jsonObj.questions[0].question_id);
+		var htmlStr = "<ul>";
+		for(var i = 0;  i<jsonObj.questions.length; i++)
+		{
+			htmlStr = htmlStr + "<li><a href='http://www.stackoverflow.com/questions/"+jsonObj.questions[i].question_id+"' target='_blank'>"+jsonObj.questions[i].title+"</a></li>";
+			
+		}
+		htmlStr =htmlStr +"</ul>";
+		document.getElementById("results").innerHTML = htmlStr;
+	}	
+	function search()
+	{
+		var val = document.getElementById("tags").value;
+		var valTwo = document.getElementById("title").value;
+		
+		//console.log("before request");
+		chrome.extension.sendRequest({msg:"search", val:val, valTwo:valTwo}, function(response){
+		
+				//console.log("request callback");
+				addcontent(response.resp);
+			
+			
+		});
+		//console.log("after request");
+	
+	}
+	</script>
+</head>
+<body>
+	<h4>Stack Overflow Search Utility</h4>
+	<label for="searchParam">Tags:</label>
+	<input type="text" name="searchParamtags" id="tags"/>
+	<br/>
+	<label for="searchParam">In Title:</label>
+	<input type="text" name="searchParamintitle" id="title"/>
+	<br/>
+	<input type ="button" value="search" id="search_button" onclick="search()"/>
+	<div id="results">
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>	
+	<script>
+		chrome.extension.onRequest.addListener(
+			function(request, sender, sendResponse)
+			{
+				if(request.msg == "search")
+				{
+					//console.log("background page message");
+					
+					searchSO(request.val, request.valTwo,
+						function(resp){sendResponse({resp:resp});});
+					
+					
+					
+					//console.log("page sent");
+				}
+				
+			}
+		);
+	
+		function searchSO(val, valTwo, callback){	
+				var api = "T5OpGygu-0G9lVAx8hBnHw";
+				var val = val;
+				var valTwo = valTwo;
+			
+				
+				var xhr = new XMLHttpRequest();
+				
+				var url = "http://api.stackoverflow.com/1.1/search?tagged="+val+"&intitle="+valTwo;
+				
+				xhr.open("GET", url, true );
+				
+				xhr.onreadystatechange = function()
+				{
+					if(xhr.readyState == 4)
+					{
+						var resp = xhr.responseText;
+						callback(resp);
+ 						//console.log(resp);
+						
+					}
+					
+				}
+				
+				xhr.send();
+		}		
+			
+	
+	</script>
+
+</html>
